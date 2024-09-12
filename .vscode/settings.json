@@ -1,0 +1,7 @@
+{
+    "editor.rulers": [
+        120
+    ],
+    "C_Cpp.clang_format_style": "file:/home/ros2/.clang-format",
+    "cmake.sourceDirectory": "/home/ros2/.devcontainer/realsense2_camera"
+}

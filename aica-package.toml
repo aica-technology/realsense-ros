@@ -1,0 +1,39 @@
+#syntax=ghcr.io/aica-technology/package-builder:v1.1.0-rc0006
+
+[signing]
+enabled = false
+signer = "v2.0.2"
+
+[metadata]
+version = "0.0.1"
+description = "Realsense ROS"
+
+[metadata.collection]
+name = "realsense-ros"
+
+[build]
+type = "ros"
+image = "v1.0.1-iron"
+
+[build.dependencies]
+"@aica/foss/control-libraries" = "v7.4.1"
+"@aica/foss/modulo" = "v4.2.1"
+
+[build.apt-repos]
+librealsense = { uri = "https://librealsense.intel.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" }
+
+[build.packages.rs_msgs]
+source = "realsense2_camera_msgs"
+skip-sign = true
+
+[build.packages.rs_description]
+source = "realsense2_description"
+skip-sign = true
+
+[build.packages.rs_camera]
+source = "realsense2_camera"
+skip-sign = true
+
+[build.packages.rs_camera.dependencies.apt]
+librealsense2 = "2.54.1-0~realsense.9591"
+librealsense2-dev = "2.54.1-0~realsense.9591"
