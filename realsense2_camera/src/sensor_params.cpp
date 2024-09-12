@@ -177,7 +177,7 @@ template<class T>
 void SensorParams::set_parameter(rs2::options sensor, rs2_option option, const std::string& module_name, const std::string& description_addition)
 {
     // set the option name, for example: depth_module.exposure
-    const std::string option_name(module_name + "." + create_graph_resource_name(rs2_option_to_string(option)));
+    const std::string option_name(module_name + "_" + create_graph_resource_name(rs2_option_to_string(option)));
 
     // get option current value, and option range values from the sensor
     T option_value;
@@ -238,7 +238,7 @@ void SensorParams::registerDynamicOptions(rs2::options sensor, const std::string
     for (auto i = 0; i < RS2_OPTION_COUNT; i++)
     {
         rs2_option option = static_cast<rs2_option>(i);
-        const std::string option_name(module_name + "." + create_graph_resource_name(rs2_option_to_string(option)));
+        const std::string option_name(module_name + "_" + create_graph_resource_name(rs2_option_to_string(option)));
         if (!sensor.supports(option) || sensor.is_option_read_only(option))
         {
             continue;
