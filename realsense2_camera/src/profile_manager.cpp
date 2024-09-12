@@ -87,6 +87,9 @@ void ProfilesManager::registerSensorUpdateParam(std::string template_name,
     for (auto& sip : unique_sips)
     {
         std::string param_name = applyTemplateName(template_name, sip);
+        if (param_name == "enable_accel" || param_name == "enable_confidence" || param_name == "enable_gyro" || param_name == "enable_infra") {
+            value = false;
+        }
         if (params.find(sip) == params.end())
             params[sip] = std::make_shared<T>(value);
         std::shared_ptr<T> param = params[sip];

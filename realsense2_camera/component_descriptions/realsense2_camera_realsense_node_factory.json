@@ -1,0 +1,7 @@
+{
+    "name": "RealSense Camera",
+    "description": {
+        "brief": "RealSense Camera component"
+    },
+    "registration": "realsense2_camera::RealSenseNodeFactory"
+}
