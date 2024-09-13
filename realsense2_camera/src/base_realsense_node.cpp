@@ -464,7 +464,7 @@ void BaseRealSenseNode::imu_callback(rs2::frame frame)
 
 void BaseRealSenseNode::frame_callback(rs2::frame frame)
 {
-    _synced_imu_publisher->Pause();
+    // _synced_imu_publisher->Pause();
     double frame_time = frame.get_timestamp();
 
     // We compute a ROS timestamp which is based on an initial ROS time at point of first frame,
@@ -583,7 +583,7 @@ void BaseRealSenseNode::frame_callback(rs2::frame frame)
                     _info_publisher,
                     _image_publishers);
     }
-    _synced_imu_publisher->Resume();
+    // _synced_imu_publisher->Resume();
 } // frame_callback
 
 void BaseRealSenseNode::multiple_message_callback(rs2::frame frame, imu_sync_method sync_method)
@@ -760,7 +760,11 @@ void BaseRealSenseNode::SetBaseStream()
     for(auto&& sensor : _available_ros_sensors)
     {
         for (auto& profile : sensor->get_stream_profiles())
-        {
+        {   
+            if (profile.stream_type() != rs2_stream::RS2_STREAM_COLOR && profile.stream_type() != rs2_stream::RS2_STREAM_DEPTH) {
+                ROS_WARN_STREAM(ros_stream_to_string(profile.stream_type()) << " is not supported.");
+                continue;
+            }
             stream_index_pair sip(profile.stream_type(), profile.stream_index());
             if (available_profiles.find(sip) != available_profiles.end())
                 continue;
