@@ -1,0 +1,52 @@
+{
+    "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
+    "name": "RealSense Camera",
+    "description": {
+        "brief": "RealSense Camera component"
+    },
+    "registration": "realsense2_camera::RealSenseNodeFactory",
+    "outputs": [
+        {
+            "display_name": "RGB Image",
+            "description": "Raw color image stream",
+            "signal_name": "color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "RGB Camera Info",
+            "description": "RGB camera intrinsics",
+            "signal_name": "color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Depth Image",
+            "description": "Raw depth image stream",
+            "signal_name": "depth_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Depth Camera Info",
+            "description": "Depth camera intrinsics",
+            "signal_name": "depth_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Aligned Depth Image",
+            "description": "Depth image stream that is aligned with the RGB image",
+            "signal_name": "aligned_depth_to_color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Aligned Depth Camera Info",
+            "description": "Aligned depth to RGB camera intrinsics",
+            "signal_name": "aligned_depth_to_color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        }
+    ]
+}
