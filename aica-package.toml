@@ -15,10 +15,6 @@ name = "realsense-ros"
 type = "ros"
 image = "v1.0.1-iron"
 
-[build.dependencies]
-"@aica/foss/control-libraries" = "v7.4.1"
-"@aica/foss/modulo" = "v4.2.1"
-
 [build.apt-repos]
 librealsense = { uri = "https://librealsense.intel.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" }
 
