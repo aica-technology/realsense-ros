@@ -21,6 +21,38 @@
         "parameter_type": "string",
         "default_value": null,
         "optional": true
+      },
+      {
+        "display_name": "Enable decimation filter",
+        "description": "Enable decimation filter (only default filter configuration supported)",
+        "parameter_name": "decimation_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable hole filling filter",
+        "description": "Enable hole filling filter (only default filter configuration supported)",
+        "parameter_name": "hole_filling_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable spatial filter",
+        "description": "Enable spatial filter (only default filter configuration supported)",
+        "parameter_name": "spatial_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable temporal filter",
+        "description": "Enable temporal filter (only default filter configuration supported)",
+        "parameter_name": "temporal_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
       }
     ],
     "outputs": [
