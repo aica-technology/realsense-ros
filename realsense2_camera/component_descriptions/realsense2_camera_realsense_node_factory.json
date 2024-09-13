@@ -5,6 +5,24 @@
         "brief": "RealSense Camera component"
     },
     "registration": "realsense2_camera::RealSenseNodeFactory",
+    "parameters": [
+      {
+        "display_name": "RGB profile",
+        "description": "RGB image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "rgb_camera_profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Depth profile",
+        "description": "Depth image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "depth_module_profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      }
+    ],
     "outputs": [
         {
             "display_name": "RGB Image",
