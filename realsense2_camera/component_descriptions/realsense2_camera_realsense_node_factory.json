@@ -2,7 +2,7 @@
     "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
     "name": "RealSense Camera",
     "description": {
-        "brief": "RealSense Camera component"
+        "brief": "Stream RGB and depth images from a RealSense camera"
     },
     "registration": "realsense2_camera::RealSenseNodeFactory",
     "parameters": [
