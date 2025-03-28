@@ -27,7 +27,7 @@ void BaseRealSenseNode::setup()
     setAvailableSensors();
     SetBaseStream();
     setupFilters();
-    // setupFiltersPublishers();
+    setupFiltersPublishers();
     setCallbackFunctions();
     // monitoringProfileChanges();
     updateSensors();
@@ -36,7 +36,8 @@ void BaseRealSenseNode::setup()
 
 void BaseRealSenseNode::setupFiltersPublishers()
 {
-    _synced_imu_publisher = std::make_shared<SyncedImuPublisher>(_node.create_publisher<sensor_msgs::msg::Imu>("imu", 5));
+    auto imu_topic = _node.declare_parameter("imu_topic", rclcpp::ParameterValue("~/imu")).get<rclcpp::PARAMETER_STRING>();
+    _synced_imu_publisher = std::make_shared<SyncedImuPublisher>(_node.create_publisher<sensor_msgs::msg::Imu>(imu_topic, 5));
 }
 
 void BaseRealSenseNode::monitoringProfileChanges()
@@ -140,11 +141,6 @@ void BaseRealSenseNode::setAvailableSensors()
     for(auto&& sensor : _dev_sensors)
     {
         const std::string module_name(rs2_to_ros(sensor.get_info(RS2_CAMERA_INFO_NAME)));
-        if (module_name != "RGB Camera" && module_name != "Depth Module")
-        {
-            ROS_WARN_STREAM("Module " << module_name << " is not supported.");
-            continue;
-        }
         std::unique_ptr<RosSensor> rosSensor;
         if (sensor.is<rs2::depth_sensor>() || 
             sensor.is<rs2::color_sensor>() ||
@@ -213,10 +209,6 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
     const std::string module_name(create_graph_resource_name(rs2_to_ros(sensor.get_info(RS2_CAMERA_INFO_NAME))));
     for (auto& profile : profiles)
     {
-        if (profile.stream_type() != rs2_stream::RS2_STREAM_COLOR && profile.stream_type() != rs2_stream::RS2_STREAM_DEPTH) {
-            ROS_WARN_STREAM(ros_stream_to_string(profile.stream_type()) << " is not supported.");
-            continue;
-        }
         stream_index_pair sip(profile.stream_type(), profile.stream_index());
         std::string stream_name(STREAM_NAME(sip));
 
@@ -281,12 +273,14 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
         else if (profile.is<rs2::motion_stream_profile>())
         {
             std::stringstream data_topic_name, info_topic_name;
-            data_topic_name << stream_name << "/sample";
-            _imu_publishers[sip] = _node.create_publisher<sensor_msgs::msg::Imu>(data_topic_name.str(),
+            data_topic_name << stream_name << "_sample";
+            auto data_topic = _node.declare_parameter(data_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + data_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _imu_publishers[sip] = _node.create_publisher<sensor_msgs::msg::Imu>(data_topic,
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos));                         
             // Publish Intrinsics:
-            info_topic_name << stream_name << "/imu_info";
-            _imu_info_publisher[sip] = _node.create_publisher<IMUInfo>(info_topic_name.str(), 
+            info_topic_name << stream_name << "_imu_info";
+            auto info_topic = _node.declare_parameter(info_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + info_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _imu_info_publisher[sip] = _node.create_publisher<IMUInfo>(info_topic, 
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(info_qos), info_qos));
             IMUInfo info_msg = getImuInfo(profile);
             _imu_info_publisher[sip]->publish(info_msg);
@@ -294,8 +288,9 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
         else if (profile.is<rs2::pose_stream_profile>())
         {
             std::stringstream data_topic_name, info_topic_name;
-            data_topic_name << stream_name << "/sample";
-            _odom_publisher = _node.create_publisher<nav_msgs::msg::Odometry>(data_topic_name.str(),
+            data_topic_name << stream_name << "_sample";
+            auto data_topic = _node.declare_parameter(data_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + data_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _odom_publisher = _node.create_publisher<nav_msgs::msg::Odometry>(data_topic,
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos));
         }
         // std::string topic_metadata(stream_name + "/metadata");

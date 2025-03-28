@@ -122,7 +122,8 @@ void PointcloudFilter::setPublisher()
     std::lock_guard<std::mutex> lock_guard(_mutex_publisher);
     if ((_is_enabled) && (!_pointcloud_publisher))
     {
-        _pointcloud_publisher = _node.create_publisher<sensor_msgs::msg::PointCloud2>("depth/color/points", 
+        auto pc_topic = _node.declare_parameter("pointcloud_topic", rclcpp::ParameterValue("~/pointcloud")).get<rclcpp::PARAMETER_STRING>();
+        _pointcloud_publisher = _node.create_publisher<sensor_msgs::msg::PointCloud2>(pc_topic, 
                                 rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos_string_to_qos(_pointcloud_qos)),
                                             qos_string_to_qos(_pointcloud_qos)));
     }
@@ -295,6 +296,6 @@ AlignDepthFilter::AlignDepthFilter(std::shared_ptr<rs2::filter> filter,
     NamedFilter(filter, parameters, logger, is_enabled, false)
 {
     _params.registerDynamicOptions(*(_filter.get()), "align_depth");
-    _params.getParameters()->setParamT("align_depth.enable", _is_enabled, update_align_depth_func);
-    _parameters_names.push_back("align_depth.enable");
+    _params.getParameters()->setParamT("align_depth_enable", _is_enabled, update_align_depth_func);
+    _parameters_names.push_back("align_depth_enable");
 }
