@@ -1,4 +1,4 @@
-#syntax=ghcr.io/aica-technology/package-builder:v1.3.0
+#syntax=ghcr.io/aica-technology/package-builder:v1.4.0
 
 [signing]
 enabled = false
@@ -13,7 +13,7 @@ name = "realsense-ros"
 
 [build]
 type = "ros"
-image = "v2.0.0-jazzy"
+image = "v2.0.2-jazzy"
 
 [build.apt-repos]
 librealsense = { uri = "https://librealsense.intel.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" }

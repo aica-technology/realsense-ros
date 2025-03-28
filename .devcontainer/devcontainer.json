@@ -13,13 +13,19 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/ros2/.devcontainer,type=bind,consistency=cached",
     "workspaceFolder": "/home/ros2/.devcontainer",
     "mounts": [
-        "source=${localWorkspaceFolder}/realsense2_camera,target=/home/ros2/ws/src/realsense2_camera,type=bind,consistency=cached"
+        "source=${localWorkspaceFolder}/realsense2_camera,target=/home/ros2/ws/src/realsense2_camera,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/realsense2_camera_msgs,target=/home/ros2/ws/src/realsense2_camera_msgs,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/realsense2_description,target=/home/ros2/ws/src/realsense2_description,type=bind,consistency=cached"
     ],
     "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-vscode.cpptools-extension-pack"
-            ]
-        }
-    }
+      "vscode": {
+        "extensions": [
+          "ms-vscode.cpptools-extension-pack",
+          "llvm-vs-code-extensions.vscode-clangd",
+          "xaver.clang-format"
+        ]
+      }
+    },
+    "postCreateCommand": "/usr/local/bin/generate_compile_commands --packages realsense2_camera_msgs realsense2_camera --cmake-args BUILD_TESTING=ON --timeout 60",
+    "postAttachCommand": "cd /home/ros2/ws && colcon build --packages-select realsense2_camera_msgs"
 }
