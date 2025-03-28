@@ -16,10 +16,13 @@
         "source=${localWorkspaceFolder}/realsense2_camera,target=/home/ros2/ws/src/realsense2_camera,type=bind,consistency=cached"
     ],
     "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-vscode.cpptools-extension-pack"
-            ]
-        }
-    }
+      "vscode": {
+        "extensions": [
+          "ms-vscode.cpptools-extension-pack",
+          "llvm-vs-code-extensions.vscode-clangd",
+          "xaver.clang-format"
+        ]
+      }
+    },
+    "postCreateCommand": "/usr/local/bin/generate_compile_commands --packages realsense2_camera_msgs realsense2_camera"
 }

@@ -6,3 +6,6 @@
 .idea/
 .vs/
 build/
+
+.*CommandMarker
+compile_commands.json
