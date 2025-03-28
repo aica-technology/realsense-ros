@@ -24,6 +24,5 @@
         ]
       }
     },
-    "postCreateCommand": "/usr/local/bin/generate_compile_commands --packages realsense2_camera_msgs realsense2_camera --cmake-args BUILD_TESTING=ON --timeout 60",
-    "postAttachCommand": "cd /home/ros2/ws && colcon build --packages-select realsense2_camera_msgs"
+    "postCreateCommand": "/usr/local/bin/generate_compile_commands --packages realsense2_camera_msgs realsense2_camera"
 }
