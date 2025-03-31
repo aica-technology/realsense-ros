@@ -73,6 +73,6 @@ namespace realsense2_camera
     {
         public:
             AlignDepthFilter(std::shared_ptr<rs2::filter> filter, std::function<void(const rclcpp::Parameter&)> update_align_depth_func,
-                std::shared_ptr<Parameters> parameters, rclcpp::Logger logger, bool is_enabled = true);
+                std::shared_ptr<Parameters> parameters, rclcpp::Logger logger, bool is_enabled = false);
     };
 }

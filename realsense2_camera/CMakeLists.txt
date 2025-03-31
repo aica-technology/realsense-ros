@@ -276,9 +276,6 @@ install(DIRECTORY
     DESTINATION share/${PROJECT_NAME}
     )
 
-install(DIRECTORY ./component_descriptions
-        DESTINATION .)
-
 # Test
 if(BUILD_TESTING)
 # This does nothing for now, note that ROS build farm build with BUILD_TESTING=1
