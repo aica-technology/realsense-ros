@@ -114,7 +114,7 @@ void RosSensor::UpdateSequenceIdCallback()
         for (rs2_option& option : options)
         {
             std::stringstream param_name_str;
-            param_name_str << module_name << "." << create_graph_resource_name(rs2_option_to_string(option)) << "." << seq_id;
+            param_name_str << module_name << "_" << create_graph_resource_name(rs2_option_to_string(option)) << "." << seq_id;
             int option_value = get_option(option);
             int user_set_option_value = _params.getParameters()->readAndDeleteParam(param_name_str.str(), option_value);
             if (option_value != user_set_option_value)
@@ -127,7 +127,7 @@ void RosSensor::UpdateSequenceIdCallback()
     set_option(RS2_OPTION_SEQUENCE_ID, original_seq_id);   // Set back to default.
 
     // Set callback to update ros parameters to gain and exposure matching the selected sequence_id:
-    const std::string option_name(module_name + "." + create_graph_resource_name(rs2_option_to_string(RS2_OPTION_SEQUENCE_ID)));
+    const std::string option_name(module_name + "_" + create_graph_resource_name(rs2_option_to_string(RS2_OPTION_SEQUENCE_ID)));
     try
     {
         int option_value = static_cast<int>(get_option(RS2_OPTION_SEQUENCE_ID));
@@ -152,7 +152,7 @@ void RosSensor::UpdateSequenceIdCallback()
 void RosSensor::set_sensor_parameter_to_ros(rs2_option option)
 {
     std::string module_name = create_graph_resource_name(rs2_to_ros(get_info(RS2_CAMERA_INFO_NAME)));
-    const std::string option_name(module_name + "." + create_graph_resource_name(rs2_option_to_string(option)));
+    const std::string option_name(module_name + "_" + create_graph_resource_name(rs2_option_to_string(option)));
     float value = get_option(option);
     _params.getParameters()->setRosParamValue(option_name, &value);
 }
