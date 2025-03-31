@@ -85,15 +85,15 @@ PointcloudFilter::PointcloudFilter(std::shared_ptr<rs2::filter> filter, rclcpp::
 void PointcloudFilter::setParameters()
 {
     std::string module_name = create_graph_resource_name(rs2_to_ros(_filter->get_info(RS2_CAMERA_INFO_NAME)));
-    std::string param_name(module_name + "." + "allow_no_texture_points");
+    std::string param_name(module_name + "_" + "allow_no_texture_points");
     _params.getParameters()->setParamT(param_name, _allow_no_texture_points);
     _parameters_names.push_back(param_name);
 
-    param_name = module_name + "." + std::string("ordered_pc");
+    param_name = module_name + "_" + std::string("ordered_pc");
     _params.getParameters()->setParamT(param_name, _ordered_pc);
     _parameters_names.push_back(param_name);
 
-    param_name = module_name + "." + std::string("pointcloud_qos");
+    param_name = module_name + "_" + std::string("pointcloud_qos");
     rcl_interfaces::msg::ParameterDescriptor crnt_descriptor;
     crnt_descriptor.description = "Available options are:\n" + list_available_qos_strings();
     _pointcloud_qos = _params.getParameters()->setParam<std::string>(param_name, DEFAULT_QOS, [this](const rclcpp::Parameter& parameter)
@@ -295,6 +295,6 @@ AlignDepthFilter::AlignDepthFilter(std::shared_ptr<rs2::filter> filter,
     NamedFilter(filter, parameters, logger, is_enabled, false)
 {
     _params.registerDynamicOptions(*(_filter.get()), "align_depth");
-    _params.getParameters()->setParamT("align_depth.enable", _is_enabled, update_align_depth_func);
-    _parameters_names.push_back("align_depth.enable");
+    _params.getParameters()->setParamT("align_depth_enable", _is_enabled, update_align_depth_func);
+    _parameters_names.push_back("align_depth_enable");
 }
