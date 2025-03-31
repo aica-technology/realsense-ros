@@ -1,0 +1,188 @@
+{
+    "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
+    "name": "RealSense Camera",
+    "description": {
+        "brief": "Stream RGB and depth images from a RealSense camera"
+    },
+    "registration": "realsense2_camera::RealSenseNodeFactory",
+    "parameters": [
+      {
+        "display_name": "Enable Accel",
+        "description": "Enable accel stream",
+        "parameter_name": "enable_accel",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Enable Color",
+        "description": "Enable color stream",
+        "parameter_name": "enable_color",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Enable Confidence",
+        "description": "Enable confidence stream",
+        "parameter_name": "enable_confidence",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Enable Depth",
+        "description": "Enable depth stream",
+        "parameter_name": "enable_depth",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Enable Gyro",
+        "description": "Enable gyro stream",
+        "parameter_name": "enable_gyro",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Enable Infra",
+        "description": "Enable infra stream",
+        "parameter_name": "enable_infra",
+        "parameter_type": "bool",
+        "default_value": "True"
+      },
+      {
+        "display_name": "Align Depth filter",
+        "description": "Enable filter to align depth with color",
+        "parameter_name": "align_depth_enable",
+        "parameter_type": "bool",
+        "default_value": "False"
+      },
+      {
+        "display_name": "Enable Pointcloud filter",
+        "description": "Enable pointcloud filter",
+        "parameter_name": "pointcloud_enable",
+        "parameter_type": "bool",
+        "default_value": "False"
+      },
+      {
+        "display_name": "RGB profile",
+        "description": "RGB image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "rgb_camera_profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Depth profile",
+        "description": "Depth image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "depth_module_profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Enable decimation filter",
+        "description": "Enable decimation filter (only default filter configuration supported)",
+        "parameter_name": "decimation_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable hole filling filter",
+        "description": "Enable hole filling filter (only default filter configuration supported)",
+        "parameter_name": "hole_filling_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable spatial filter",
+        "description": "Enable spatial filter (only default filter configuration supported)",
+        "parameter_name": "spatial_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Enable temporal filter",
+        "description": "Enable temporal filter (only default filter configuration supported)",
+        "parameter_name": "temporal_filter_enable",
+        "parameter_type": "bool",
+        "default_value": "False",
+        "internal": true
+      },
+      {
+        "display_name": "Pointcloud stream filter",
+        "description": "Pointcloud stream filter",
+        "parameter_name": "pointcloud_stream_filter",
+        "parameter_type": "int",
+        "default_value": "0",
+        "internal": true
+      },
+      {
+        "display_name": "Pointcloud stream index filter",
+        "description": "Pointcloud stream index filter",
+        "parameter_name": "pointcloud_stream_index_filter",
+        "parameter_type": "int",
+        "default_value": "-1",
+        "internal": true
+      }
+    ],
+    "outputs": [
+        {
+            "display_name": "Aligned Depth Image",
+            "description": "Depth image stream that is aligned with the RGB image",
+            "signal_name": "aligned_depth_to_color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Aligned Depth Camera Info",
+            "description": "Aligned depth to RGB camera intrinsics",
+            "signal_name": "aligned_depth_to_color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "RGB Image",
+            "description": "Raw color image stream",
+            "signal_name": "color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "RGB Camera Info",
+            "description": "RGB camera intrinsics",
+            "signal_name": "color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Depth Image",
+            "description": "Raw depth image stream",
+            "signal_name": "depth_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Depth Camera Info",
+            "description": "Depth camera intrinsics",
+            "signal_name": "depth_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "IMU",
+            "description": "IMU",
+            "signal_name": "imu",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Imu"
+        },
+        {
+            "display_name": "Pointcloud",
+            "description": "Pointcloud",
+            "signal_name": "pointcloud",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::PointCloud2"
+        }
+    ]
+}
