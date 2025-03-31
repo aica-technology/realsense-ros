@@ -277,7 +277,7 @@ void VideoProfilesManager::registerVideoSensorParams()
     _fps = video_profile.fps();
 
     // Register ROS parameter:
-    std::string param_name(_module_name + "_profile");
+    std::string param_name(_module_name + ".profile");
     rcl_interfaces::msg::ParameterDescriptor crnt_descriptor;
     crnt_descriptor.description = "Available options are:\n" + get_profiles_descriptions();
     std::stringstream crnt_profile_str;
