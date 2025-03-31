@@ -29,14 +29,15 @@ void BaseRealSenseNode::setup()
     setupFilters();
     setupFiltersPublishers();
     setCallbackFunctions();
-    monitoringProfileChanges();
+    // monitoringProfileChanges();
     updateSensors();
     publishServices();
 }
 
 void BaseRealSenseNode::setupFiltersPublishers()
 {
-    _synced_imu_publisher = std::make_shared<SyncedImuPublisher>(_node.create_publisher<sensor_msgs::msg::Imu>("imu", 5));
+    auto imu_topic = _node.declare_parameter("imu_topic", rclcpp::ParameterValue("~/imu")).get<rclcpp::PARAMETER_STRING>();
+    _synced_imu_publisher = std::make_shared<SyncedImuPublisher>(_node.create_publisher<sensor_msgs::msg::Imu>(imu_topic, 5));
 }
 
 void BaseRealSenseNode::monitoringProfileChanges()
@@ -221,30 +222,39 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
             if (sensor.rs2::sensor::is<rs2::depth_sensor>())
                 rectified_image = true;
 
-            image_raw << stream_name << "/image_" << ((rectified_image)?"rect_":"") << "raw";
-            camera_info << stream_name << "/camera_info";
+            image_raw << stream_name << "_image_" << ((rectified_image)?"rect_":"") << "raw";
+            camera_info << stream_name << "_camera_info";
+            auto image_topic =
+                _node.declare_parameter(image_raw.str() + "_topic", rclcpp::ParameterValue("~/" + image_raw.str()))
+                    .get<rclcpp::PARAMETER_STRING>();
+            auto camera_topic =
+                _node.declare_parameter(camera_info.str() + "_topic", rclcpp::ParameterValue("~/" + camera_info.str()))
+                    .get<rclcpp::PARAMETER_STRING>();
 
             // We can use 2 types of publishers:
             // Native RCL publisher that support intra-process zero-copy comunication
             // image-transport package publisher that adds a commpressed image topic if package is found installed
             if (_use_intra_process)
             {
-                _image_publishers[sip] = std::make_shared<image_rcl_publisher>(_node, image_raw.str(), qos);
+                _image_publishers[sip] = std::make_shared<image_rcl_publisher>(_node, image_topic, qos);
             }
             else
             {
-                _image_publishers[sip] = std::make_shared<image_transport_publisher>(_node, image_raw.str(), qos);
-                ROS_DEBUG_STREAM("image transport publisher was created for topic" << image_raw.str());
+                _image_publishers[sip] = std::make_shared<image_transport_publisher>(_node, image_topic, qos);
+                ROS_DEBUG_STREAM("image transport publisher was created for topic" << image_topic);
             }
 
-            _info_publisher[sip] = _node.create_publisher<sensor_msgs::msg::CameraInfo>(camera_info.str(), 
+            _info_publisher[sip] = _node.create_publisher<sensor_msgs::msg::CameraInfo>(camera_topic, 
                                     rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(info_qos), info_qos));
 
             if (_align_depth_filter->is_enabled() && (sip != DEPTH) && sip.second < 2)
             {
                 std::stringstream aligned_image_raw, aligned_camera_info;
-                aligned_image_raw << "aligned_depth_to_" << stream_name << "/image_raw";
-                aligned_camera_info << "aligned_depth_to_" << stream_name << "/camera_info";
+                aligned_image_raw << "aligned_depth_to_" << stream_name << "_image_raw";
+                aligned_camera_info << "aligned_depth_to_" << stream_name << "_camera_info";
+
+                auto image_topic = _node.declare_parameter(aligned_image_raw.str() + "_topic", rclcpp::ParameterValue("~/" + aligned_image_raw.str())).get<rclcpp::PARAMETER_STRING>();
+                auto camera_topic = _node.declare_parameter(aligned_camera_info.str() + "_topic", rclcpp::ParameterValue("~/" + aligned_camera_info.str())).get<rclcpp::PARAMETER_STRING>();
 
                 std::string aligned_stream_name = "aligned_depth_to_" + stream_name;
 
@@ -253,26 +263,28 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
                 // image-transport package publisher that add's a commpressed image topic if the package is installed
                 if (_use_intra_process)
                 {
-                    _depth_aligned_image_publishers[sip] = std::make_shared<image_rcl_publisher>(_node, aligned_image_raw.str(), qos);
+                    _depth_aligned_image_publishers[sip] = std::make_shared<image_rcl_publisher>(_node, image_topic, qos);
                 }
                 else
                 {
-                    _depth_aligned_image_publishers[sip] = std::make_shared<image_transport_publisher>(_node, aligned_image_raw.str(), qos);
-                    ROS_DEBUG_STREAM("image transport publisher was created for topic" << image_raw.str());
+                    _depth_aligned_image_publishers[sip] = std::make_shared<image_transport_publisher>(_node, image_topic, qos);
+                    ROS_DEBUG_STREAM("image transport publisher was created for topic" << image_topic);
                 }
-                _depth_aligned_info_publisher[sip] = _node.create_publisher<sensor_msgs::msg::CameraInfo>(aligned_camera_info.str(),
+                _depth_aligned_info_publisher[sip] = _node.create_publisher<sensor_msgs::msg::CameraInfo>(camera_topic,
                                                       rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(info_qos), info_qos));
             }
         }
         else if (profile.is<rs2::motion_stream_profile>())
         {
             std::stringstream data_topic_name, info_topic_name;
-            data_topic_name << stream_name << "/sample";
-            _imu_publishers[sip] = _node.create_publisher<sensor_msgs::msg::Imu>(data_topic_name.str(),
+            data_topic_name << stream_name << "_sample";
+            auto data_topic = _node.declare_parameter(data_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + data_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _imu_publishers[sip] = _node.create_publisher<sensor_msgs::msg::Imu>(data_topic,
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos));                         
             // Publish Intrinsics:
-            info_topic_name << stream_name << "/imu_info";
-            _imu_info_publisher[sip] = _node.create_publisher<IMUInfo>(info_topic_name.str(), 
+            info_topic_name << stream_name << "_imu_info";
+            auto info_topic = _node.declare_parameter(info_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + info_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _imu_info_publisher[sip] = _node.create_publisher<IMUInfo>(info_topic, 
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(info_qos), info_qos));
             IMUInfo info_msg = getImuInfo(profile);
             _imu_info_publisher[sip]->publish(info_msg);
@@ -280,12 +292,13 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
         else if (profile.is<rs2::pose_stream_profile>())
         {
             std::stringstream data_topic_name, info_topic_name;
-            data_topic_name << stream_name << "/sample";
-            _odom_publisher = _node.create_publisher<nav_msgs::msg::Odometry>(data_topic_name.str(),
+            data_topic_name << stream_name << "_sample";
+            auto data_topic = _node.declare_parameter(data_topic_name.str() + "_topic", rclcpp::ParameterValue("~/" + data_topic_name.str())).get<rclcpp::PARAMETER_STRING>();
+            _odom_publisher = _node.create_publisher<nav_msgs::msg::Odometry>(data_topic,
                                         rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos));
         }
-        std::string topic_metadata(stream_name + "/metadata");
-        _metadata_publishers[sip] = _node.create_publisher<realsense2_camera_msgs::msg::Metadata>(topic_metadata, 
+        auto metadata_topic = _node.declare_parameter(stream_name + "_metadata_topic", rclcpp::ParameterValue("~/" + stream_name + "/metadata")).get<rclcpp::PARAMETER_STRING>();
+        _metadata_publishers[sip] = _node.create_publisher<realsense2_camera_msgs::msg::Metadata>(metadata_topic, 
                                 rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(info_qos), info_qos));
         
         if (!((rs2::stream_profile)profile==(rs2::stream_profile)_base_profile))
@@ -296,8 +309,9 @@ void BaseRealSenseNode::startPublishers(const std::vector<stream_profile>& profi
             options.use_intra_process_comm = rclcpp::IntraProcessSetting::Disable;
             rmw_qos_profile_t extrinsics_qos = rmw_qos_profile_latched;
             
-            std::string topic_extrinsics("extrinsics/" + create_graph_resource_name(ros_stream_to_string(_base_profile.stream_type()) + "_to_" + stream_name));
-            _extrinsics_publishers[sip] = _node.create_publisher<realsense2_camera_msgs::msg::Extrinsics>(topic_extrinsics, 
+            std::string extrinsics(create_graph_resource_name(ros_stream_to_string(_base_profile.stream_type()) + "_to_" + stream_name));
+            auto extrinsics_topic = _node.declare_parameter(extrinsics + "_extrinsics_topic", rclcpp::ParameterValue("~/extrinsics/" + extrinsics)).get<rclcpp::PARAMETER_STRING>();
+            _extrinsics_publishers[sip] = _node.create_publisher<realsense2_camera_msgs::msg::Extrinsics>(extrinsics_topic, 
                                     rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(extrinsics_qos), extrinsics_qos), std::move(options));
         }
     }
