@@ -29,7 +29,7 @@ void BaseRealSenseNode::setup()
     setupFilters();
     setupFiltersPublishers();
     setCallbackFunctions();
-    // monitoringProfileChanges();
+    monitoringProfileChanges();
     updateSensors();
     publishServices();
 }
