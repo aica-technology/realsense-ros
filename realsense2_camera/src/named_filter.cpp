@@ -32,7 +32,7 @@ void NamedFilter::setParameters(std::function<void(const rclcpp::Parameter&)> en
     std::string module_name = create_graph_resource_name(rs2_to_ros(_filter->get_info(RS2_CAMERA_INFO_NAME)));
     module_name_str << module_name;
     _params.registerDynamicOptions(*(_filter.get()), module_name_str.str());
-    module_name_str << ".enable";
+    module_name_str << "_enable";
 
     _params.getParameters()->setParamT(module_name_str.str(), _is_enabled, enable_param_func);
     _parameters_names.push_back(module_name_str.str());
