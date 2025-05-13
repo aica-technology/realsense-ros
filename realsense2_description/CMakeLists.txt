@@ -22,7 +22,8 @@ install(DIRECTORY
         launch 
         meshes 
         rviz 
-        urdf
+        urdf 
+        urdf_examples 
         DESTINATION share/${PROJECT_NAME})
 
 ament_package()
