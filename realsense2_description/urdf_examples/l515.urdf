@@ -6,14 +6,7 @@
   <material name="plastic">
     <color rgba="0.1 0.1 0.1 1"/>
   </material>
-  <!-- this specific plug does not apply to L515 -->
-  <link name="base_link"/>
   <!-- camera body, with origin at bottom screw mount -->
-  <joint name="camera_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="base_link"/>
-    <child link="camera_bottom_screw_frame"/>
-  </joint>
   <link name="camera_bottom_screw_frame"/>
   <joint name="camera_link_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.007500000000000001 0.0 0.021150000000000002"/>
