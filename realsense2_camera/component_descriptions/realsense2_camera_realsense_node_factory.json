@@ -51,21 +51,21 @@
       {
         "display_name": "Align Depth filter",
         "description": "Enable filter to align depth with color",
-        "parameter_name": "align_depth_enable",
+        "parameter_name": "align_depth.enable",
         "parameter_type": "bool",
         "default_value": "False"
       },
       {
         "display_name": "Enable Pointcloud filter",
         "description": "Enable pointcloud filter",
-        "parameter_name": "pointcloud_enable",
+        "parameter_name": "pointcloud.enable",
         "parameter_type": "bool",
         "default_value": "False"
       },
       {
         "display_name": "RGB profile",
         "description": "RGB image profile as a string (<width>x<height>x<fps>)",
-        "parameter_name": "rgb_camera_profile",
+        "parameter_name": "rgb_camera.profile",
         "parameter_type": "string",
         "default_value": null,
         "optional": true
@@ -73,7 +73,7 @@
       {
         "display_name": "Depth profile",
         "description": "Depth image profile as a string (<width>x<height>x<fps>)",
-        "parameter_name": "depth_module_profile",
+        "parameter_name": "depth_module.profile",
         "parameter_type": "string",
         "default_value": null,
         "optional": true
@@ -81,7 +81,7 @@
       {
         "display_name": "Enable decimation filter",
         "description": "Enable decimation filter (only default filter configuration supported)",
-        "parameter_name": "decimation_filter_enable",
+        "parameter_name": "decimation_filter.enable",
         "parameter_type": "bool",
         "default_value": "False",
         "internal": true
@@ -89,7 +89,7 @@
       {
         "display_name": "Enable hole filling filter",
         "description": "Enable hole filling filter (only default filter configuration supported)",
-        "parameter_name": "hole_filling_filter_enable",
+        "parameter_name": "hole_filling_filter.enable",
         "parameter_type": "bool",
         "default_value": "False",
         "internal": true
@@ -97,7 +97,7 @@
       {
         "display_name": "Enable spatial filter",
         "description": "Enable spatial filter (only default filter configuration supported)",
-        "parameter_name": "spatial_filter_enable",
+        "parameter_name": "spatial_filter.enable",
         "parameter_type": "bool",
         "default_value": "False",
         "internal": true
@@ -105,7 +105,7 @@
       {
         "display_name": "Enable temporal filter",
         "description": "Enable temporal filter (only default filter configuration supported)",
-        "parameter_name": "temporal_filter_enable",
+        "parameter_name": "temporal_filter.enable",
         "parameter_type": "bool",
         "default_value": "False",
         "internal": true
@@ -113,7 +113,7 @@
       {
         "display_name": "Pointcloud stream filter",
         "description": "Pointcloud stream filter",
-        "parameter_name": "pointcloud_stream_filter",
+        "parameter_name": "pointcloud.stream_filter",
         "parameter_type": "int",
         "default_value": "0",
         "internal": true
@@ -121,7 +121,7 @@
       {
         "display_name": "Pointcloud stream index filter",
         "description": "Pointcloud stream index filter",
-        "parameter_name": "pointcloud_stream_index_filter",
+        "parameter_name": "pointcloud.stream_index_filter",
         "parameter_type": "int",
         "default_value": "-1",
         "internal": true
