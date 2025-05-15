@@ -1,52 +1,60 @@
 {
-    "$schema": "https://docs.aica.tech/schemas/1-1-1/component.schema.json",
+    "$schema": "https://docs.aica.tech/schemas/1-1-2/component.schema.json",
     "name": "RealSense Camera",
     "description": {
-        "brief": "Stream RGB and depth images from a RealSense camera"
+        "brief": "Stream data from a RealSense camera",
+        "detailed": "This component streams data from a RealSense camera. It supports various filters and configurations to toggle and customize the data streams."
     },
     "registration": "realsense2_camera::RealSenseNodeFactory",
+    "inherits": "rclcpp::Node",
     "parameters": [
       {
         "display_name": "Enable Accel",
         "description": "Enable accel stream",
         "parameter_name": "enable_accel",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Enable Color",
         "description": "Enable color stream",
         "parameter_name": "enable_color",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Enable Confidence",
         "description": "Enable confidence stream",
         "parameter_name": "enable_confidence",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Enable Depth",
         "description": "Enable depth stream",
         "parameter_name": "enable_depth",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Enable Gyro",
         "description": "Enable gyro stream",
         "parameter_name": "enable_gyro",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Enable Infra",
         "description": "Enable infra stream",
         "parameter_name": "enable_infra",
         "parameter_type": "bool",
-        "default_value": "True"
+        "default_value": "True",
+        "dynamic": true
       },
       {
         "display_name": "Align Depth filter",
@@ -61,6 +69,30 @@
         "parameter_name": "pointcloud.enable",
         "parameter_type": "bool",
         "default_value": "False"
+      },
+      {
+        "display_name": "Serial Number",
+        "description": "The serial number of the camera, only relevant if multiple cameras are connected",
+        "parameter_name": "serial_no",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "USB Port ID",
+        "description": "The USB port ID of the camera, only relevant if multiple cameras are connected",
+        "parameter_name": "usb_port_id",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Device Type",
+        "description": "The camera device type (tested on D435, D435i, L515), only relevant if multiple cameras are connected",
+        "parameter_name": "device_type",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
       },
       {
         "display_name": "RGB profile",
