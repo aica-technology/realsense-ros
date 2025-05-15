@@ -129,20 +129,6 @@
     ],
     "outputs": [
         {
-            "display_name": "Aligned Depth Image",
-            "description": "Depth image stream that is aligned with the RGB image",
-            "signal_name": "aligned_depth_to_color_image_raw",
-            "signal_type": "other",
-            "custom_signal_type": "sensor_msgs::msg::Image"
-        },
-        {
-            "display_name": "Aligned Depth Camera Info",
-            "description": "Aligned depth to RGB camera intrinsics",
-            "signal_name": "aligned_depth_to_color_camera_info",
-            "signal_type": "other",
-            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
-        },
-        {
             "display_name": "RGB Image",
             "description": "Raw color image stream",
             "signal_name": "color_image_raw",
@@ -167,6 +153,20 @@
             "display_name": "Depth Camera Info",
             "description": "Depth camera intrinsics",
             "signal_name": "depth_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Aligned Depth Image",
+            "description": "Depth image stream that is aligned with the RGB image",
+            "signal_name": "aligned_depth_to_color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Aligned Depth Camera Info",
+            "description": "Aligned depth to RGB camera intrinsics",
+            "signal_name": "aligned_depth_to_color_camera_info",
             "signal_type": "other",
             "custom_signal_type": "sensor_msgs::msg::CameraInfo"
         },
