@@ -3,7 +3,7 @@
     "name": "RealSense Camera",
     "description": {
         "brief": "Stream data from a RealSense camera",
-        "detailed": "This component streams data from a RealSense camera. It supports various filters and configurations to toggle and customize the data streams."
+        "details": "This component streams data from a RealSense camera. It supports various filters and configurations to toggle and customize the data streams."
     },
     "registration": "realsense2_camera::RealSenseNodeFactory",
     "inherits": "rclcpp::Node",
