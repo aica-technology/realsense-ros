@@ -101,6 +101,7 @@ if(SET_USER_BREAK_AT_STARTUP)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBPDEBUG")
 endif()
 
+include(InstallAicaDescriptions)
 
 find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
@@ -276,8 +277,7 @@ install(DIRECTORY
     DESTINATION share/${PROJECT_NAME}
     )
 
-install(DIRECTORY ./component_descriptions
-    DESTINATION .)
+install_aica_descriptions(./component_descriptions ${CMAKE_INSTALL_PREFIX}/component_descriptions)
 
 # Test
 if(BUILD_TESTING)
