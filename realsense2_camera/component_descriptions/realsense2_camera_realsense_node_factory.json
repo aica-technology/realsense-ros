@@ -41,7 +41,7 @@
       },
       {
         "display_name": "Color profile",
-        "description": "Color image profile as a string (<width>x<height>x<fps>)",
+        "description": "Color image profile as a string (<width>x<height>x<fps>). Check the camera's documentation for the available resolution profiles.",
         "parameter_name": "rgb_camera.profile",
         "parameter_type": "string",
         "default_value": null,
@@ -49,7 +49,7 @@
       },
       {
         "display_name": "Depth profile",
-        "description": "Depth image profile as a string (<width>x<height>x<fps>)",
+        "description": "Depth image profile as a string (<width>x<height>x<fps>). Check the camera's documentation for the available resolution profiles.",
         "parameter_name": "depth_module.profile",
         "parameter_type": "string",
         "default_value": null,
