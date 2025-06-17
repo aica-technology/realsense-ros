@@ -984,3 +984,13 @@ void BaseRealSenseNode::startDiagnosticsUpdater()
         });
     }
 }
+
+std::string BaseRealSenseNode::getTopicName(const std::string& signal_name) {
+    auto parameter_name = signal_name + "_topic";
+    if (!_node.has_parameter(parameter_name)) {
+        rcl_interfaces::msg::ParameterDescriptor descriptor;
+        descriptor.description = "Signal topic name of output " + signal_name;
+        _node.declare_parameter(parameter_name, rclcpp::ParameterValue("~/" + signal_name), descriptor);
+    }
+    return _node.get_parameter(parameter_name).as_string();
+}
