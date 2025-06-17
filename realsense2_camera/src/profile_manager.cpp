@@ -18,6 +18,15 @@
 using namespace realsense2_camera;
 using namespace rs2;
 
+static const std::unordered_map<std::string, bool> default_enabled_sip = {
+    {"color", true},
+    {"depth", true},
+    {"confidence", false},
+    {"infra", false},
+    {"gyro", false},
+    {"accel", false}
+};
+
 ProfilesManager::ProfilesManager(std::shared_ptr<Parameters> parameters, rclcpp::Logger logger):
     _logger(logger),
     _params(parameters, _logger)
@@ -87,6 +96,9 @@ void ProfilesManager::registerSensorUpdateParam(std::string template_name,
     for (auto& sip : unique_sips)
     {
         std::string param_name = applyTemplateName(template_name, sip);
+        try {
+            value = default_enabled_sip.at(create_graph_resource_name(STREAM_NAME(sip)));
+        } catch (const std::out_of_range&) {}
         if (params.find(sip) == params.end())
             params[sip] = std::make_shared<T>(value);
         std::shared_ptr<T> param = params[sip];
