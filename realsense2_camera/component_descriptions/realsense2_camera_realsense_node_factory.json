@@ -1,0 +1,252 @@
+{
+    "$schema": "https://docs.aica.tech/schemas/1-1-2/component.schema.json",
+    "name": "RealSense Camera",
+    "description": {
+        "brief": "Stream data from a RealSense camera",
+        "details": "This component streams data from a RealSense camera. It supports various filters and configurations to toggle and customize the data streams."
+    },
+    "registration": "realsense2_camera::RealSenseNodeFactory",
+    "inherits": "rclcpp::Node",
+    "parameters": [
+      {
+        "display_name": "Camera name",
+        "description": "Name of the camera, used to set the frame names",
+        "parameter_name": "camera_name",
+        "parameter_type": "string",
+        "default_value": "camera"
+      },
+      {
+        "display_name": "Serial number",
+        "description": "Serial number of the camera, required when using multiple cameras",
+        "parameter_name": "serial_no",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "USB port",
+        "description": "USB port of the camera, required when using multiple cameras",
+        "parameter_name": "usb_port_id",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Device type",
+        "description": "The camera device type (tested on D435, D435i, L515), required when using multiple cameras",
+        "parameter_name": "device_type",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Color profile",
+        "description": "Color image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "rgb_camera.profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Depth profile",
+        "description": "Depth image profile as a string (<width>x<height>x<fps>)",
+        "parameter_name": "depth_module.profile",
+        "parameter_type": "string",
+        "default_value": null,
+        "optional": true
+      },
+      {
+        "display_name": "Enable alignment",
+        "description": "Enable the alignement of the depth image with the color image. If true, the aligend depth image and camera info will be published on their separate outputs.",
+        "parameter_name": "align_depth.enable",
+        "parameter_type": "bool",
+        "default_value": "false"
+      },
+      {
+        "display_name": "Enable accel",
+        "description": "Enable accel stream",
+        "parameter_name": "enable_accel",
+        "parameter_type": "bool",
+        "default_value": "false",
+        "dynamic": true,
+        "internal": true
+      },
+      {
+        "display_name": "Enable confidence",
+        "description": "Enable confidence stream",
+        "parameter_name": "enable_confidence",
+        "parameter_type": "bool",
+        "default_value": "false",
+        "dynamic": true,
+        "internal": true
+      },
+      {
+        "display_name": "Enable gyro",
+        "description": "Enable gyro stream",
+        "parameter_name": "enable_gyro",
+        "parameter_type": "bool",
+        "default_value": "false",
+        "dynamic": true,
+        "internal": true
+      },
+      {
+        "display_name": "Enable infra",
+        "description": "Enable infra stream",
+        "parameter_name": "enable_infra",
+        "parameter_type": "bool",
+        "default_value": "false",
+        "dynamic": true,
+        "internal": true
+      },
+      {
+        "display_name": "Enable temporal filter",
+        "description": "Enable the depth temporal filter (if enabled, set temporal_filter.holes_fill, temporal_filter.filter_smooth_alpha and temporal_filter.filter_smooth_alpha)",
+        "parameter_name": "temporal_filter.enable",
+        "parameter_type": "bool",
+        "default_value": "false"
+      },
+      {
+        "display_name": "Temporal filter persistency index",
+        "description": "Temporal filter persistency index, check documentation for details (between 0 and 8)",
+        "parameter_name": "temporal_filter.holes_fill",
+        "parameter_type": "int",
+        "default_value": "3",
+        "internal": true
+      },
+      {
+        "display_name": "Temporal filter smooth alpha",
+        "description": "The alpha factor in an exponential moving average where 1 means no filter and 0 means infinite filter",
+        "parameter_name": "temporal_filter.filter_smooth_alpha",
+        "parameter_type": "double",
+        "default_value": "0.4",
+        "internal": true
+      },
+      {
+        "display_name": "Temporal filter smooth delta",
+        "description": "Step-size boundary, establishes the threshold used to preserve surfaces (between 1 and 100)",
+        "parameter_name": "temporal_filter.filter_smooth_delta",
+        "parameter_type": "int",
+        "default_value": "20",
+        "internal": true
+      },
+      {
+        "display_name": "Enable decimation filter",
+        "description": "Enable decimation filter to reduce scene complexity (if enabled, set decimation_filter.filter_magnitude)",
+        "parameter_name": "decimation_filter.enable",
+        "parameter_type": "bool",
+        "default_value": "false"
+      },
+      {
+        "display_name": "Decimation filter magnitude",
+        "description": "The decimation linear scale factor (between 2 and 8)",
+        "parameter_name": "decimation_filter.filter_magnitude",
+        "parameter_type": "int",
+        "default_value": "2",
+        "internal": true
+      },
+      {
+        "display_name": "Enable hole filling filter",
+        "description": "Enable hole filling filter to rectify missing data in the resulting image (if enabled, set hole_filling_filter.holes_fill)",
+        "parameter_name": "hole_filling_filter.enable",
+        "parameter_type": "bool",
+        "default_value": "false"
+      },
+      { "display_name": "Hole filling filter holes fill",
+        "description": "Control the data that will be used to fill the invalid pixels (between 0 and 2)",
+        "parameter_name": "hole_filling_filter.holes_fill",
+        "parameter_type": "int",
+        "default_value": "1",
+        "internal": true
+      },
+      {
+        "display_name": "Enable spatial filter",
+        "description": "Enable spatial filter to enhance smoothness of the reconstruced data (if enabled, set spatial_filter.filter_magnitude, spatial_filter.holes_fill, spatial_filter.filter_smooth_alpha and spatial_filter.filter_smooth_delta)",
+        "parameter_name": "spatial_filter.enable",
+        "parameter_type": "bool",
+        "default_value": "false"
+      },
+      {
+        "display_name": "Spatial filter magnitude",
+        "description": "Number of filter iterations (between 1 and 5)",
+        "parameter_name": "spatial_filter.filter_magnitude",
+        "parameter_type": "int",
+        "default_value": "2",
+        "internal": true
+      },
+      {
+        "display_name": "Spatial filter hole filling",
+        "description": "In-place heuristic symmetric hole-filling mode applied horizontally during the filter passes, intended to rectify minor artefacts with minimal performance impact (between 0 and 5)",
+        "parameter_name": "spatial_filter.holes_fill",
+        "parameter_type": "int",
+        "default_value": "0",
+        "internal": true
+      },
+      {
+        "display_name": "Spatial filter smooth alpha",
+        "description": "The alpha factor in an exponential moving average where 1 means no filter and 0 means infinite filter",
+        "parameter_name": "spatial_filter.filter_smooth_alpha",
+        "parameter_type": "double",
+        "default_value": "0.5",
+        "internal": true
+      },
+      {
+        "display_name": "Spatial filter smooth delta",
+        "description": "Step-size boundary, establishes the threshold used to preserve egdes (between 1 and 50)",
+        "parameter_name": "spatial_filter.filter_smooth_delta",
+        "parameter_type": "int",
+        "default_value": "20",
+        "internal": true
+      }
+    ],
+    "outputs": [
+        {
+            "display_name": "Color image",
+            "description": "Raw color image stream",
+            "signal_name": "color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Color camera info",
+            "description": "Color camera intrinsics",
+            "signal_name": "color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Depth image",
+            "description": "Raw depth image stream",
+            "signal_name": "depth_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Depth camera info",
+            "description": "Depth camera intrinsics",
+            "signal_name": "depth_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "Aligned depth image",
+            "description": "Depth image stream that is aligned with the color image, if alignment is enabled",
+            "signal_name": "aligned_depth_to_color_image_raw",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Image"
+        },
+        {
+            "display_name": "Aligned depth camera info",
+            "description": "Aligned depth to color camera intrinsics, if alignment is enabled",
+            "signal_name": "aligned_depth_to_color_camera_info",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::CameraInfo"
+        },
+        {
+            "display_name": "IMU",
+            "description": "IMU data stream, if available from the camera",
+            "signal_name": "imu",
+            "signal_type": "other",
+            "custom_signal_type": "sensor_msgs::msg::Imu"
+        }
+    ]
+}
