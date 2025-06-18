@@ -175,7 +175,7 @@
       },
       {
         "display_name": "Spatial filter hole filling",
-        "description": "In-place heuristic symmetric hole-filling mode applied horizontally during the filter passes, intended to rectify minor artefacts with minimal performance impact (between 0 and 5)",
+        "description": "In-place heuristic symmetric hole-filling mode applied horizontally during the filter passes, intended to rectify minor artefacts with minimal performance impact. Check documentation for details (between 0 and 5).",
         "parameter_name": "spatial_filter.holes_fill",
         "parameter_type": "int",
         "default_value": "0",
