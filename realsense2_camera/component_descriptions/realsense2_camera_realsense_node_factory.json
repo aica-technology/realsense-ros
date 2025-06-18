@@ -152,7 +152,7 @@
         "default_value": "false"
       },
       { "display_name": "Hole filling filter holes fill",
-        "description": "Control the data that will be used to fill the invalid pixels (between 0 and 2)",
+        "description": "Control the data that will be used to fill the invalid pixels, check documentation for details (between 0 and 2)",
         "parameter_name": "hole_filling_filter.holes_fill",
         "parameter_type": "int",
         "default_value": "1",
@@ -240,13 +240,6 @@
             "signal_name": "aligned_depth_to_color_camera_info",
             "signal_type": "other",
             "custom_signal_type": "sensor_msgs::msg::CameraInfo"
-        },
-        {
-            "display_name": "IMU",
-            "description": "IMU data stream, if available from the camera",
-            "signal_name": "imu",
-            "signal_type": "other",
-            "custom_signal_type": "sensor_msgs::msg::Imu"
         }
     ]
 }
