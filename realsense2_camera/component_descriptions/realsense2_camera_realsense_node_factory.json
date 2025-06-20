@@ -199,7 +199,7 @@
       },
       {
         "display_name": "Unite IMU method",
-        "description": "Method to unite IMU data. If accel and gyro streams are enabled, this parameter determines how the IMU data is combined and published on its own topic (0 -> None, 1 -> Copy, 2 -> Linear_ interpolation).",
+        "description": "Method to unite IMU data. If accel and gyro streams are enabled, this parameter determines how the IMU data is combined and published on its own topic (0 -> None, 1 -> Copy, 2 -> Linear interpolation).",
         "parameter_name": "unite_imu_method",
         "parameter_type": "int",
         "default_value": "0",
