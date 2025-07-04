@@ -57,7 +57,7 @@
       },
       {
         "display_name": "Enable alignment",
-        "description": "Enable the alignement of the depth image with the color image. If true, the aligend depth image and camera info will be published on their separate outputs.",
+        "description": "Enable the alignment of the depth image with the color image. If true, the aligned depth image and camera info will be published on their separate outputs.",
         "parameter_name": "align_depth.enable",
         "parameter_type": "bool",
         "default_value": "false"
@@ -160,7 +160,7 @@
       },
       {
         "display_name": "Enable spatial filter",
-        "description": "Enable spatial filter to enhance smoothness of the reconstruced data (if enabled, set spatial_filter.filter_magnitude, spatial_filter.holes_fill, spatial_filter.filter_smooth_alpha and spatial_filter.filter_smooth_delta)",
+        "description": "Enable spatial filter to enhance smoothness of the reconstructed data (if enabled, set spatial_filter.filter_magnitude, spatial_filter.holes_fill, spatial_filter.filter_smooth_alpha and spatial_filter.filter_smooth_delta)",
         "parameter_name": "spatial_filter.enable",
         "parameter_type": "bool",
         "default_value": "false"
@@ -191,7 +191,7 @@
       },
       {
         "display_name": "Spatial filter smooth delta",
-        "description": "Step-size boundary, establishes the threshold used to preserve egdes (between 1 and 50)",
+        "description": "Step-size boundary, establishes the threshold used to preserve edges (between 1 and 50)",
         "parameter_name": "spatial_filter.filter_smooth_delta",
         "parameter_type": "int",
         "default_value": "20",
