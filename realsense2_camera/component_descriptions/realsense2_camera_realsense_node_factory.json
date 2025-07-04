@@ -100,7 +100,7 @@
       },
       {
         "display_name": "Enable temporal filter",
-        "description": "Enable the depth temporal filter (if enabled, set temporal_filter.holes_fill, temporal_filter.filter_smooth_alpha and temporal_filter.filter_smooth_alpha)",
+        "description": "Enable the depth temporal filter (if enabled, set temporal_filter.holes_fill, temporal_filter.filter_smooth_alpha and temporal_filter.filter_smooth_delta)",
         "parameter_name": "temporal_filter.enable",
         "parameter_type": "bool",
         "default_value": "false"
