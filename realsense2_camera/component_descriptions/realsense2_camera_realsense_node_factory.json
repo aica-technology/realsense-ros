@@ -224,7 +224,7 @@
         {
             "display_name": "Depth image",
             "description": "Raw depth image stream",
-            "signal_name": "depth_image_raw",
+            "signal_name": "depth_image_rect_raw",
             "signal_type": "other",
             "custom_signal_type": "sensor_msgs::msg::Image"
         },
