@@ -1,4 +1,4 @@
-#syntax=ghcr.io/aica-technology/package-builder:v1.4.0
+#syntax=ghcr.io/aica-technology/package-builder:v1.6.2
 
 [signing]
 enabled = false
