@@ -1,0 +1,9 @@
+d435.urdf:
+  name: "Intel RealSense D435"
+  description: "Intel RealSense D435 depth camera"
+d435i.urdf:
+  name: "Intel RealSense D435i"
+  description: "Intel RealSense D435i depth camera"
+l515.urdf:
+  name: "Intel RealSense L515"
+  description: "Intel RealSense L515 LiDAR camera"
