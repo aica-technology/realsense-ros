@@ -1,4 +1,4 @@
-#syntax=ghcr.io/aica-technology/package-builder:v1.4.0
+#syntax=ghcr.io/aica-technology/package-builder:v1.6.2
 
 [signing]
 enabled = false
@@ -13,10 +13,10 @@ name = "realsense-ros"
 
 [build]
 type = "ros"
-image = "v2.0.5-jazzy"
+image = "v2.0.6-jazzy"
 
 [build.apt-repos]
-librealsense = { uri = "https://librealsense.intel.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "https://librealsense.intel.com/Debian/librealsense.pgp" }
+librealsense = { uri = "https://librealsense.realsenseai.com/Debian/apt-repo", distribution = "jammy", components = ["main"], keyring = "librealsenseai.gpg" }
 
 [build.packages.rs_msgs]
 source = "realsense2_camera_msgs"
